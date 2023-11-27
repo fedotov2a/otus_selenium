@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class AdminPageLocators:
+class LoginAdminPageLocators:
     USERNAME_INPUT = (By.XPATH, '//input[@id = "input-username"]')
     PASSWORD_INPUT = (By.XPATH, '//input[@id = "input-password"]')
     LOGIN_BUTTON = (By.XPATH, '//button[@type = "submit"]')
