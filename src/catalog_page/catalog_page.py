@@ -14,3 +14,9 @@ class CatalogPage(BasePage):
         self.find_element(CatalogPageLocators.SORT_SELECTBOX)
         self.find_element(CatalogPageLocators.LIMIT_SELECTBOX)
 
+    def check_currency(self, currency):
+        product_cards = self.find_elements(CatalogPageLocators.PRODUCT_CARDS)
+
+        for product_card in product_cards:
+            product_price = product_card.find_element(*CatalogPageLocators.PRODUCT_PRICE).text
+            assert currency in product_price

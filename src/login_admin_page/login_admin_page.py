@@ -12,3 +12,22 @@ class LoginAdminPage(BasePage):
         self.find_element(LoginAdminPageLocators.PASSWORD_INPUT)
         self.find_element(LoginAdminPageLocators.FORGOTTEN_PASSWORD_BUTTON)
         self.find_element(LoginAdminPageLocators.LOGIN_BUTTON)
+
+    def enter_name(self, text):
+        self.set_text(LoginAdminPageLocators.USERNAME_INPUT, text)
+
+    def enter_password(self, text):
+        self.set_text(LoginAdminPageLocators.PASSWORD_INPUT, text)
+
+    def click_on_login_button(self):
+        self.click(LoginAdminPageLocators.LOGIN_BUTTON)
+
+    def click_on_logout_button(self):
+        self.click(LoginAdminPageLocators.LOGOUT_BUTTON)
+
+    def check_logged_in(self):
+        element = self.find_element(LoginAdminPageLocators.PROFILE_BUTTON)
+        assert 'John Doe' == element.text
+
+    def check_logout(self):
+        self.check_elements()

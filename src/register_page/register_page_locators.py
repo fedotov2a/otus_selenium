@@ -10,3 +10,5 @@ class RegisterPageLocators:
     PASSWORD_INPUT = (By.XPATH, '//input[@id = "input-password"]')
     CONFIRM_PASSWORD_INPUT = (By.XPATH, '//input[@id = "input-confirm"]')
     CONTINUE_BUTTON = (By.XPATH, '//input[@type = "submit"]')
+    PRIVACY_POLICY_CHECKBOX = (By.XPATH, '//input[@name = "agree"]')
+    SUCCESS_ACCOUNT_CREATED_LABEL = (By.XPATH, '//div[@id = "content"]/h1')
