@@ -1,13 +1,22 @@
-from tests.common import assert_element
-from src.catalog_page.catalog_page_locators import CatalogPageLocators
+from time import sleep
+
+from src.catalog_page.catalog_page import CatalogPage
+from src.common.menu_bar import MenuBar
 
 
 def test_check_elements_on_laptop_notebook_page(browser, url):
-    browser.get(f'{url}/laptop-notebook')
+    catalog_page = CatalogPage(browser, f'{url}/laptop-notebook')
+    catalog_page.open()
+    catalog_page.check_elements()
 
-    assert_element(browser, CatalogPageLocators.BREADCRUMB_LIST)
-    assert_element(browser, CatalogPageLocators.CATALOG_NAME)
-    assert_element(browser, CatalogPageLocators.LIST_VIEW_BUTTON)
-    assert_element(browser, CatalogPageLocators.GRID_VIEW_BUTTON)
-    assert_element(browser, CatalogPageLocators.SORT_SELECTBOX)
-    assert_element(browser, CatalogPageLocators.LIMIT_SELECTBOX)
+
+def test_change_currency(browser, url):
+    catalog_page = CatalogPage(browser, f'{url}/laptop-notebook')
+    catalog_page.open()
+
+    menu_bar = MenuBar(browser)
+    menu_bar.click_on_currency_button()
+    currency = menu_bar.click_on_currency_option()
+
+    sleep(1)
+    catalog_page.check_currency(currency)
