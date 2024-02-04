@@ -43,6 +43,7 @@ def browser(request):
     options = None
 
     logger = logging.getLogger(request.node.name)
+    Path('logs').mkdir(exist_ok=True)
     file_handler = logging.FileHandler(f'logs/{request.node.name}.log')
     file_handler.setFormatter(logging.Formatter('%(levelname)s %(message)s'))
     logger.addHandler(file_handler)
