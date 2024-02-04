@@ -1,9 +1,13 @@
+import allure
+
 from src.admin_page.admin_page import AdminPage
 from src.login_admin_page.login_admin_page import LoginAdminPage
 from test_data.user_admin import UserAdmin
 from test_data.product import Product
 
 
+@allure.feature('Админ панель')
+@allure.title('Добавить продукт')
 def test_add_product(browser, url):
     login_admin_page = LoginAdminPage(browser, f'{url}/admin')
     login_admin_page.open()
@@ -30,6 +34,8 @@ def test_add_product(browser, url):
     )
 
 
+@allure.feature('Админ панель')
+@allure.title('Удалить продукт')
 def test_delete_product(browser, url):
     login_admin_page = LoginAdminPage(browser, f'{url}/admin')
     login_admin_page.open()

@@ -1,15 +1,20 @@
-from time import sleep
+import allure
 
+from time import sleep
 from src.catalog_page.catalog_page import CatalogPage
 from src.common.menu_bar import MenuBar
 
 
+@allure.feature('Каталог')
+@allure.title('Отображение элементов на странице с ноутбуком')
 def test_check_elements_on_laptop_notebook_page(browser, url):
     catalog_page = CatalogPage(browser, f'{url}/laptop-notebook')
     catalog_page.open()
     catalog_page.check_elements()
 
 
+@allure.feature('Каталог')
+@allure.title('Смена валюты')
 def test_change_currency(browser, url):
     catalog_page = CatalogPage(browser, f'{url}/laptop-notebook')
     catalog_page.open()

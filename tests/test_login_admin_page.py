@@ -1,13 +1,19 @@
+import allure
+
 from src.login_admin_page.login_admin_page import LoginAdminPage
 from test_data.user_admin import UserAdmin
 
 
+@allure.feature('Страница логина в админ панель')
+@allure.title('Отображение элементов на странице логина')
 def test_check_elements_on_login_admin_page(browser, url):
     login_admin_page = LoginAdminPage(browser, f'{url}/admin')
     login_admin_page.open()
     login_admin_page.check_elements()
 
 
+@allure.feature('Страница логина в админ панель')
+@allure.title('Логин в админ панель')
 def test_login_admin(browser, url):
     login_admin_page = LoginAdminPage(browser, f'{url}/admin')
     login_admin_page.open()
