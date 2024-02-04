@@ -1,6 +1,8 @@
 import pytest
 import allure
+import logging
 
+from datetime import datetime
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as YaService
@@ -13,7 +15,8 @@ def pytest_addoption(parser):
     parser.addoption('--maximize', action='store_true')
     parser.addoption('--headless', action='store_true')
     parser.addoption('--url', help='base app url')
-    parser.addoption('--executor')  # default='192.168.0.105'
+    parser.addoption('--executor')
+    parser.addoption("--log_level", default="INFO")
 
 
 @pytest.fixture
@@ -34,9 +37,17 @@ def browser(request):
     maximize = request.config.getoption('--maximize')
     headless = request.config.getoption('--headless')
     executor = request.config.getoption('--executor')
+    log_level = request.config.getoption('--log_level')
 
     driver = None
     options = None
+
+    logger = logging.getLogger(request.node.name)
+    file_handler = logging.FileHandler(f'logs/{request.node.name}.log')
+    file_handler.setFormatter(logging.Formatter('%(levelname)s %(message)s'))
+    logger.addHandler(file_handler)
+    logger.setLevel(level=log_level)
+    logger.info(f'--- Тест [{request.node.name}] запущен [{datetime.now()}]')
 
     if browser_name == 'chrome':
         options = ChromeOptions()
@@ -66,11 +77,23 @@ def browser(request):
     else:
         raise ValueError(f'Браузер [{browser_name}] не поддерживается')
 
+    caps = {
+        "browserName": browser_name
+    }
+
+    for k, v in caps.items():
+        options.set_capability(k, v)
+
     if executor is not None:
         driver = webdriver.Remote(
             command_executor=f'http://{executor}:4444/wd/hub',
             options=options
         )
+
+    driver.log_level = log_level
+    driver.logger = logger
+    driver.test_name = request.node.name
+    logger.info(f'--- Браузер [{browser_name}] запущен')
 
     if maximize:
         driver.maximize_window()
@@ -84,4 +107,5 @@ def browser(request):
             attachment_type=allure.attachment_type.PNG
         )
 
+    logger.info(f'--- Тест [{request.node.name}] завершился [{datetime.now()}]')
     driver.quit()

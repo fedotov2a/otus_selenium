@@ -10,6 +10,8 @@ class ProductCardPage(BasePage):
 
     @allure.step
     def check_elements(self):
+        self.logger.info(f'--- Проверка отображения элементов на странице')
+
         product_name_elem = self.find_element(ProductCardPageLocators.PRODUCT_NAME_LABEL)
         assert product_name_elem.text == 'HP LP3065'
 

@@ -11,10 +11,14 @@ class MenuBar(BasePage):
 
     @allure.step
     def click_on_currency_button(self):
+        self.logger.info(f'--- Нажатие на кнопку изменения валюты')
+
         self.click(MenuBarLocators.CURRENCY_BUTTON)
 
     @allure.step
     def click_on_currency_option(self, currency_name=None):
+        self.logger.info(f'--- Изменение валюты')
+
         currency_options = self.find_elements(MenuBarLocators.CURRENCY_OPTION_LIST)
 
         if currency_name is None:

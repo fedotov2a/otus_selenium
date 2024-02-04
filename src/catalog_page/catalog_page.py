@@ -10,6 +10,8 @@ class CatalogPage(BasePage):
 
     @allure.step
     def check_elements(self):
+        self.logger.info(f'--- Проверка отображения элементов')
+
         self.find_element(CatalogPageLocators.BREADCRUMB_LIST)
         self.find_element(CatalogPageLocators.CATALOG_NAME)
         self.find_element(CatalogPageLocators.LIST_VIEW_BUTTON)
@@ -19,6 +21,8 @@ class CatalogPage(BasePage):
 
     @allure.step
     def check_currency(self, currency):
+        self.logger.info(f'--- Проверка валюты [{currency}]')
+
         product_cards = self.find_elements(CatalogPageLocators.PRODUCT_CARDS)
 
         for product_card in product_cards:
