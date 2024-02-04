@@ -1,3 +1,5 @@
+import allure
+from allure_commons.types import AttachmentType
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -23,7 +25,7 @@ class BasePage:
         try:
             return WebDriverWait(self.driver, timeout).until(expected_condition(locator))
         except TimeoutException:
-            self.driver.save_screenshot(f'{self.driver.session_id}.png')
+            allure.attach(self.driver.get_screenshot_as_png(), name=f'{self.driver.session_id}.png', attachment_type=AttachmentType.PNG)
             raise AssertionError(f'Не найден элемент [{locator}]')
 
     def find_elements(
@@ -35,7 +37,7 @@ class BasePage:
         try:
             return WebDriverWait(self.driver, timeout).until(expected_condition(locator))
         except TimeoutException:
-            self.driver.save_screenshot(f'{self.driver.session_id}.png')
+            allure.attach(self.driver.get_screenshot_as_png(), name=f'{self.driver.session_id}.png', attachment_type=AttachmentType.PNG)
             raise AssertionError(f'Не найдены элементы [{locator}]')
 
     def set_text(

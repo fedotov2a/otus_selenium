@@ -1,4 +1,6 @@
 import pytest
+import allure
+
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as YaService
@@ -17,6 +19,13 @@ def pytest_addoption(parser):
 @pytest.fixture
 def url(request):
     return request.config.getoption('--url')
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item):
+    outcome = yield
+    rep = outcome.get_result()
+    item.status = 'passed' if rep.outcome == 'passed' else 'failed'
 
 
 @pytest.fixture
@@ -67,4 +76,12 @@ def browser(request):
         driver.maximize_window()
 
     yield driver
+
+    if request.node.status == "failed":
+        allure.attach(
+            driver.get_screenshot_as_png(),
+            name='failure_screenshot.png',
+            attachment_type=allure.attachment_type.PNG
+        )
+
     driver.quit()

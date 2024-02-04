@@ -1,14 +1,20 @@
+import allure
+
 from time import sleep
 from src.main_page.main_page import MainPage
 from src.common.menu_bar import MenuBar
 
 
+@allure.feature('Главная страница')
+@allure.title('Отображение элементов на главной странице')
 def test_check_elements_on_main_page(browser, url):
     main_page = MainPage(browser, url)
     main_page.open()
     main_page.check_elements()
 
 
+@allure.feature('Главная страница')
+@allure.title('Добавить продукт в корзину')
 def test_add_product_to_cart(browser, url):
     main_page = MainPage(browser, url)
     main_page.open()
@@ -17,6 +23,8 @@ def test_add_product_to_cart(browser, url):
     main_page.check_product_in_cart(product_name, product_price)
 
 
+@allure.feature('Главная страница')
+@allure.title('Смена валюты')
 def test_change_currency(browser, url):
     main_page = MainPage(browser, url)
     main_page.open()
